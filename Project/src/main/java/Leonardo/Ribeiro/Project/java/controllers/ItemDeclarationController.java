@@ -1,47 +1,44 @@
 package Leonardo.Ribeiro.Project.java.controllers;
 
-
-import Leonardo.Ribeiro.Project.java.dtos.DeclarationRequestDto;
-import Leonardo.Ribeiro.Project.java.dtos.DeclarationResponseDto;
+import Leonardo.Ribeiro.Project.java.dtos.ItemDeclarationRequestDto;
+import Leonardo.Ribeiro.Project.java.dtos.ItemDeclarationResponseDto;
 import Leonardo.Ribeiro.Project.java.services.DeclarationService;
+import Leonardo.Ribeiro.Project.java.services.ItemDeclarationService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/declarations")
 @RequiredArgsConstructor
-public class DeclarationController {
-
+@RestController
+@RequestMapping("/item-declarations")
+public class ItemDeclarationController {
     @Autowired
-    private DeclarationService service;
+   private ItemDeclarationService service;
+
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<DeclarationResponseDto> getAllDeclarations() {
+    public List<ItemDeclarationResponseDto> get(){
         return service.findAll();
     }
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.FOUND)
-    public DeclarationResponseDto getDeclarationById(@PathVariable Long id) {
+    public ItemDeclarationResponseDto getById(@PathVariable Long id){
         return service.findById(id);
-
     }
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public DeclarationResponseDto createDeclaration(@RequestBody DeclarationRequestDto dto) {
+    public ItemDeclarationResponseDto create(@RequestBody ItemDeclarationRequestDto dto){
         return service.create(dto);
-
     }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDeclaration(@PathVariable Long id) {
-        service.delete(id);
-    }
+
 }

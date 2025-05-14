@@ -5,6 +5,7 @@ import Leonardo.Ribeiro.Project.java.dtos.MaterialRequestDto;
 import Leonardo.Ribeiro.Project.java.dtos.MaterialResponseDto;
 import Leonardo.Ribeiro.Project.java.services.MaterialService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,8 @@ import java.util.List;
 public class MaterialController {
 
 
-
-    private final MaterialService service;
+    @Autowired
+    private MaterialService service;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -37,7 +38,7 @@ public class MaterialController {
         return service.update(id, dto);
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public MaterialResponseDto create(@RequestBody MaterialRequestDto dto) {
         return service.create(dto);

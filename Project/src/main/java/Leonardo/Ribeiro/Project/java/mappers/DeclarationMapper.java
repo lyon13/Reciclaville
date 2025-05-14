@@ -6,8 +6,8 @@ import Leonardo.Ribeiro.Project.java.entities.DeclarationEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface DeclarationMapper {
     DeclarationResponseDto toDto(DeclarationEntity declaration);
-    DeclarationEntity toEntity(DeclarationRequestDto dto, @MappingTarget DeclarationEntity declaration);
+    DeclarationEntity toEntity(DeclarationRequestDto dto);
 }

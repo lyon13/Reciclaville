@@ -11,7 +11,8 @@ import java.util.Date;
 @Entity
 @Table(name = "declarations")
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 public class DeclarationEntity {
@@ -21,7 +22,6 @@ public class DeclarationEntity {
     private Long id;
 
     @ManyToOne@JoinColumn(name = "id_customer", nullable = false)
-    @Column(nullable = false)
     private CustomerEntity idCustomer;
 
     @Column(nullable = false)

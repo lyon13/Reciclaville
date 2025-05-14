@@ -4,6 +4,7 @@ import Leonardo.Ribeiro.Project.java.dtos.CustomerRequestDto;
 import Leonardo.Ribeiro.Project.java.dtos.CustomerResponseDto;
 import Leonardo.Ribeiro.Project.java.services.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerService service;
+    @Autowired
+    private CustomerService service;
 
     @GetMapping
     public List<CustomerResponseDto> get() {
@@ -28,7 +30,7 @@ public class CustomerController {
         return service.findById(id);
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerResponseDto create(@RequestBody CustomerRequestDto dto) {
         return service.create(dto);

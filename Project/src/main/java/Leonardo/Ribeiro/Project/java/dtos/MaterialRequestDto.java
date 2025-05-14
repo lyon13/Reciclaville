@@ -1,12 +1,12 @@
 package Leonardo.Ribeiro.Project.java.dtos;
 
-import lombok.Builder;
-import lombok.Data;
+import java.math.BigDecimal;
 
-@Data
-@Builder
-public class MaterialRequestDto {
 
-    private String name;
-    private String compensationPercentage;
+public record MaterialRequestDto(
+        String name,
+        BigDecimal compensationPercentage) {
 }
+
+
+

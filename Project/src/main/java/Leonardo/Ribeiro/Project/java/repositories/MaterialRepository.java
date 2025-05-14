@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MaterialRepository extends JpaRepository<MaterialEntity, Long> {
 
-    List<MaterialEntity> findEntityById(String name);
+
 
 }

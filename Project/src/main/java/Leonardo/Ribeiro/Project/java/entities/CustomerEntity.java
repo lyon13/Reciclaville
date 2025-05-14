@@ -32,6 +32,6 @@ public class CustomerEntity {
 
     @Column(nullable = false)
 
-    private String onwerName;
+    private String ownerName;
 
 }
