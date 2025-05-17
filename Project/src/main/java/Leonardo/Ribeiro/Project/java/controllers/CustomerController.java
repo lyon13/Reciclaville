@@ -17,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    @Autowired
-    private CustomerService service;
+
+    private final CustomerService service;
 
     @GetMapping
     public List<CustomerResponseDto> get() {

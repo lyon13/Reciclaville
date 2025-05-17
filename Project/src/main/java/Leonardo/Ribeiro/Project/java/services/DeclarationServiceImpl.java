@@ -3,7 +3,9 @@ package Leonardo.Ribeiro.Project.java.services;
 
 import Leonardo.Ribeiro.Project.java.dtos.DeclarationRequestDto;
 import Leonardo.Ribeiro.Project.java.dtos.DeclarationResponseDto;
+import Leonardo.Ribeiro.Project.java.entities.CustomerEntity;
 import Leonardo.Ribeiro.Project.java.entities.DeclarationEntity;
+import Leonardo.Ribeiro.Project.java.entities.ItemDeclarationEntity;
 import Leonardo.Ribeiro.Project.java.mappers.DeclarationMapper;
 import Leonardo.Ribeiro.Project.java.repositories.DeclarationRepository;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +23,11 @@ import java.util.Optional;
 @Service
 public class DeclarationServiceImpl implements DeclarationService{
 
-    private DeclarationRepository repository;
-    private DeclarationMapper mapper = Mappers.getMapper(DeclarationMapper.class);
+    private final DeclarationRepository repository;
+    private DeclarationMapper mapper;
+    private final MaterialService materialService;
+    private final CustomerService customerService;
+
 
     @Override
     public List<DeclarationResponseDto> findAll() {
@@ -35,13 +43,37 @@ public class DeclarationServiceImpl implements DeclarationService{
 
 
 
-    @Override
-    public DeclarationResponseDto create(DeclarationRequestDto dto ) {
-        DeclarationEntity declaration = mapper.toEntity(dto);
+
+    public DeclarationResponseDto create(DeclarationRequestDto requestDto) {
+        if(requestDto.initialPeriodDate().isAfter(requestDto.finalPeriodDate())){
+            throw new IllegalArgumentException("Initial period date cannot be after final period date");
+        }
+
+        if (requestDto.totalMaterial().compareTo(BigDecimal.ZERO)<= 0) {throw new IllegalArgumentException("Declared tons must be greater than 0");
+        }
+        if (requestDto.compensationPercentage().compareTo(BigDecimal.ZERO) < 0 || requestDto.compensationPercentage().compareTo(new BigDecimal("100")) > 0){
+            throw new IllegalArgumentException("Compensation percentage must be between 0 and 100");
+        }
+         CustomerEntity customer = customerService.findByIdEntity(requestDto.idCustomer());
 
 
-        declaration = repository.save(declaration);
-        return mapper.toDto(declaration);
+        DeclarationEntity declaration = new DeclarationEntity();
+        declaration.setIdCustomer(customer);
+        declaration.setDeclarationDate(LocalDate.now());
+        declaration.setInitialPeriodDate(requestDto.initialPeriodDate());
+        declaration.setFinalPeriodDate(requestDto.finalPeriodDate());
+        declaration.setTotalMaterial(requestDto.totalMaterial());
+
+        BigDecimal totalCompensation = requestDto.totalMaterial()
+                .multiply(requestDto.compensationPercentage())
+                .divide(new BigDecimal("100"));
+        declaration.setTotalCompensation(totalCompensation);
+
+
+        DeclarationEntity savedDeclaration = repository.save(declaration);
+
+
+        return mapper.toDto(savedDeclaration);
     }
 
     @Override

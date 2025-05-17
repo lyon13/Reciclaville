@@ -2,11 +2,10 @@ package Leonardo.Ribeiro.Project.java.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.mapping.Constraint;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "declarations")
@@ -39,6 +38,8 @@ public class DeclarationEntity {
     @Column(nullable = false)
     private BigDecimal totalCompensation;
 
+    @OneToMany(mappedBy = "idDeclaration", cascade = CascadeType.ALL)
+    private List<ItemDeclarationEntity> itemDeclaration;
 
 
 

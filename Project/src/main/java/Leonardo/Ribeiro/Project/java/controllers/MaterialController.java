@@ -27,13 +27,13 @@ public class MaterialController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public MaterialResponseDto getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.GONE)
+    @ResponseStatus(HttpStatus.OK)
     public MaterialResponseDto update(@PathVariable Long id, @RequestBody MaterialRequestDto dto) {
         return service.update(id, dto);
     }

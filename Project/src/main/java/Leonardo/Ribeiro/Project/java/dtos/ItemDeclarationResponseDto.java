@@ -7,8 +7,7 @@ import java.math.BigDecimal;
 
 public class ItemDeclarationResponseDto {
     private Long id;
-    private DeclarationEntity idDeclaration;
-    private MaterialEntity idMaterial;
+    private MaterialResponseDto idMaterial;
     private BigDecimal compensationPersentage;
     private BigDecimal tonsDeclareted;
     private BigDecimal tonsCompensation;

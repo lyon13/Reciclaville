@@ -33,6 +33,12 @@ public class CustomerServiceImpl implements CustomerService{
         return mapper.toDto(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found")));
      }
 
+    @Override
+    public CustomerEntity findByIdEntity(Long id) {
+
+         return repository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+    }
+
 
     public CustomerResponseDto create(CustomerRequestDto dto) {
         CustomerEntity customer = mapper.toEntity(dto);

@@ -3,6 +3,8 @@ package Leonardo.Ribeiro.Project.java.controllers;
 
 import Leonardo.Ribeiro.Project.java.dtos.DeclarationRequestDto;
 import Leonardo.Ribeiro.Project.java.dtos.DeclarationResponseDto;
+import Leonardo.Ribeiro.Project.java.dtos.ItemDeclarationRequestDto;
+import Leonardo.Ribeiro.Project.java.entities.ItemDeclarationEntity;
 import Leonardo.Ribeiro.Project.java.services.DeclarationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeclarationController {
 
-    @Autowired
-    private DeclarationService service;
+
+    private final DeclarationService service;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -26,7 +28,7 @@ public class DeclarationController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public DeclarationResponseDto getDeclarationById(@PathVariable Long id) {
         return service.findById(id);
 

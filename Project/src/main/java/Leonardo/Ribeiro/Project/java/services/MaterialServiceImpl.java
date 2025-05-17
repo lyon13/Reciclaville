@@ -40,11 +40,11 @@ public class MaterialServiceImpl implements MaterialService {
     public MaterialResponseDto create(MaterialRequestDto dto ) {
         MaterialEntity material =  mapper.toEntity(dto);
         MaterialEntity materialResult = repository.save(material);
-        return mapper.toDto(material);
+        return mapper.toDto(materialResult);
     }
     @Override
     public MaterialResponseDto update(Long id, MaterialRequestDto dto) {
-        MaterialEntity material =  mapper.toEntity(dto);;
+        MaterialEntity material =  findEntityById(id);
         material.setName(dto.name());
         material.setCompensationPercentage(dto.compensationPercentage());
 
@@ -57,6 +57,7 @@ public class MaterialServiceImpl implements MaterialService {
         repository.delete(material);
     }
     private MaterialEntity findEntityById(Long id) {
-        return repository.findById(id).orElse(null);
+
+        return repository.findById(id).orElseThrow(()-> new RuntimeException("Material not found with id: " + id));
     }
 }
