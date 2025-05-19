@@ -1,11 +1,10 @@
 package Leonardo.Ribeiro.Project.java.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.math.BigDecimal;
 
@@ -22,21 +21,21 @@ public class ItemDeclarationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "id_declaration", nullable = false)
     @ManyToOne
-    private DeclarationEntity idDeclaration;
+    @JoinColumn(name = "id_declaration")
+    private DeclarationEntity declaration;
 
-    @JoinColumn(name = "id_material", nullable = false)
     @ManyToOne
+    @JoinColumn(name = "id_material", nullable = false)
     private MaterialEntity idMaterial;
 
-    @Column(nullable = false)
+    @Column
     private BigDecimal compensationPersentage;
 
     @Column(nullable = false)
-    private BigDecimal tonsDeclareted;
+    private BigDecimal tonsDeclarated;
 
-    @Column(nullable = false)
+    @Column
     private BigDecimal tonsCompensation;
 
 }

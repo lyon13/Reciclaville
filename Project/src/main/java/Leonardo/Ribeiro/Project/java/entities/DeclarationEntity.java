@@ -1,5 +1,6 @@
 package Leonardo.Ribeiro.Project.java.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,13 +33,13 @@ public class DeclarationEntity {
     @Column(nullable = false)
     private LocalDate finalPeriodDate;
 
-    @Column(nullable = false)
+    @Column
     private BigDecimal totalMaterial;
 
-    @Column(nullable = false)
+    @Column
     private BigDecimal totalCompensation;
 
-    @OneToMany(mappedBy = "idDeclaration", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "declaration", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemDeclarationEntity> itemDeclaration;
 
 

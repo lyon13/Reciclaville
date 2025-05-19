@@ -4,7 +4,7 @@ import Leonardo.Ribeiro.Project.java.entities.MaterialEntity;
 
 import java.math.BigDecimal;
 
-public record ItemDeclarationRequestDto(MaterialEntity idMaterial,
+public record ItemDeclarationRequestDto(Long idMaterial,
         BigDecimal tonsDeclarated) {
 
 }

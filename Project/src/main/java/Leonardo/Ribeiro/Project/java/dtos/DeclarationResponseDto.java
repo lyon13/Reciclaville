@@ -12,17 +12,17 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Builder
-@Data
-public class DeclarationResponseDto {
-    private Long id;
-    private CustomerResponseDto idCustomer;
-    private LocalDate declarationDate;
-    private LocalDate initialPeriodDate;
-    private LocalDate finalPeriodDate;
-    private BigDecimal totalMaterial;
-    private BigDecimal totalCompensation;
-    private List<ItemDeclarationResponseDto> itemDeclaration;
+
+public record DeclarationResponseDto(
+     Long id,
+     CustomerResponseDto idCustomer,
+     LocalDate declarationDate,
+     LocalDate initialPeriodDate,
+     LocalDate finalPeriodDate,
+     BigDecimal totalMaterial,
+     BigDecimal totalCompensation,
+     List<ItemDeclarationResponseDto> itemDeclaration
+){
 }

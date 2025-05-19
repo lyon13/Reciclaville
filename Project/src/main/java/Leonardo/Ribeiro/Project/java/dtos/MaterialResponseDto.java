@@ -7,15 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Builder
-@Data
-public class MaterialResponseDto {
 
-    private Long id;
-    private String name;
-    private BigDecimal compensationPercentage;
-
-
+public record MaterialResponseDto(Long id,
+       String name, BigDecimal compensationPercentage)
+{
 }

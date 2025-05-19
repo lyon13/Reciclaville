@@ -4,6 +4,7 @@ package Leonardo.Ribeiro.Project.java.services;
 import Leonardo.Ribeiro.Project.java.dtos.CustomerRequestDto;
 import Leonardo.Ribeiro.Project.java.dtos.CustomerResponseDto;
 import Leonardo.Ribeiro.Project.java.entities.CustomerEntity;
+import Leonardo.Ribeiro.Project.java.exceptions.badrequests.CustomerRequestException;
 import Leonardo.Ribeiro.Project.java.mappers.CustomerMapper;
 import Leonardo.Ribeiro.Project.java.repositories.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -41,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 
     public CustomerResponseDto create(CustomerRequestDto dto) {
+        validateDto(dto);
         CustomerEntity customer = mapper.toEntity(dto);
 
         customer = repository.save(customer);
@@ -62,4 +64,22 @@ public class CustomerServiceImpl implements CustomerService{
         CustomerEntity customer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         repository.delete(customer);
      }
+
+    private void validateDto(CustomerRequestDto dto) {
+        if (dto == null) {
+            throw new CustomerRequestException("CustomerRequestDto cannot be null");
+        }
+        if (dto.name() == null || dto.name().trim().isEmpty()) {
+            throw new CustomerRequestException("Name cannot be null or empty");
+        }
+        if (dto.cnpj() == null || dto.cnpj().trim().isEmpty()) {
+            throw new CustomerRequestException("CNPJ cannot be null or empty");
+        }
+        if (dto.economicActivity() == null || dto.economicActivity().trim().isEmpty()) {
+            throw new CustomerRequestException("Economic activity cannot be null or empty");
+        }
+        if (dto.ownerName() == null || dto.ownerName().trim().isEmpty()) {
+            throw new CustomerRequestException("Owner name cannot be null or empty");
+        }
+    }
 }

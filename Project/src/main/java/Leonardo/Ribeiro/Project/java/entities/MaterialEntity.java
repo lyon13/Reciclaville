@@ -6,7 +6,10 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-
+@AllArgsConstructor
+@Setter
+@Getter
+@Builder
 @Entity
 @Table(name = "materials")
 

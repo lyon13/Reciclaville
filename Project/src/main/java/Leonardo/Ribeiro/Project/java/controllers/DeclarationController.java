@@ -9,6 +9,7 @@ import Leonardo.Ribeiro.Project.java.services.DeclarationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class DeclarationController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<DeclarationResponseDto> getAllDeclarations() {
-        return service.findAll();
+    public ResponseEntity<List<DeclarationResponseDto>> findAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("{id}")
@@ -36,8 +37,8 @@ public class DeclarationController {
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public DeclarationResponseDto createDeclaration(@RequestBody DeclarationRequestDto dto) {
-        return service.create(dto);
+    public ResponseEntity<DeclarationResponseDto> create(@RequestBody DeclarationRequestDto requestDto) {
+        return ResponseEntity.ok(service.create(requestDto));
 
     }
 
